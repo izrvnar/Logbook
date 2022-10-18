@@ -1,5 +1,6 @@
 package com.example.logbook;
 
+import com.example.logbook.tabs.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -27,7 +28,9 @@ public class Main extends Application {
         menu.getMenus().addAll(fileMenu, creditsMenu);
         // Create tab pane
         TabPane tabPane = new TabPane();
-
+        tabPane.getTabs().addAll(new WorkoutTab(), new ExercisesTab(), new ProgressTab(), new RoutineBreakdownTab(), new WeightTrackerTab(), new SettingsTab());
+        tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        root.setCenter(tabPane);
 
 
 
