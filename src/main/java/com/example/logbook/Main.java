@@ -29,6 +29,7 @@ public class Main extends Application {
         // Create tab pane
         TabPane tabPane = new TabPane();
         tabPane.getTabs().addAll(new WorkoutTab(), new ExercisesTab(), new ProgressTab(), new RoutineBreakdownTab(), new WeightTrackerTab(), new SettingsTab());
+        // setting the tabs to not be able to be closed
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         root.setCenter(tabPane);
 

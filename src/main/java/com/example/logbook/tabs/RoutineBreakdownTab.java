@@ -4,6 +4,6 @@ import javafx.scene.control.Tab;
 
 public class RoutineBreakdownTab extends Tab {
     public RoutineBreakdownTab() {
-        this.setText("RoutineBreakdown");
+        this.setText("Routine Breakdown");
     }
 }
