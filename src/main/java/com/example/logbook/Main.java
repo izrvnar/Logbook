@@ -2,6 +2,10 @@ package com.example.logbook;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -11,7 +15,24 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, 1024, 720);
+        // creating menu bar
+        MenuBar menu = new MenuBar();
+        Menu fileMenu = new Menu("File");
+        Menu creditsMenu = new Menu("Credits");
+        MenuItem exit = new MenuItem("Exit");
+        exit.setOnAction(e->{
+            System.exit(0);
+        });
+        fileMenu.getItems().add(exit);
+        menu.getMenus().addAll(fileMenu, creditsMenu);
+        // Create tab pane
+        TabPane tabPane = new TabPane();
+
+
+
+
+        root.setTop(menu);
+        Scene scene = new Scene(root, 1024, 768);
         stage.setTitle("Logbook");
         stage.setScene(scene);
         stage.show();
