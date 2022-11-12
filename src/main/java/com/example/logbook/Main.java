@@ -4,11 +4,9 @@ import com.example.logbook.tabs.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TabPane;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -59,11 +57,34 @@ public class Main extends Application {
         // Text added to vbox
         crudLabels.getChildren().addAll(createWorkoutText, deleteWorkoutText, updateWorkoutText);
 
+        //creating the name and date labels and text fields
+        VBox nameDateBox = new VBox(25);
+        HBox nameTextBox = new HBox();
+        HBox dateTextBox = new HBox();
+        Text nameText = new Text("Name");
+        nameText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        TextField nameField = new TextField("");
+        nameField.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        nameTextBox.getChildren().addAll(nameText, nameField);
+
+        Text dateText = new Text("Date");
+        dateText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+
+        TextField dateField = new TextField("");
+        dateField.setFont(Font.font("Arial", FontWeight.BOLD, 20));
+        dateTextBox.getChildren().addAll(dateText, dateField);
+
+        nameDateBox.getChildren().addAll(nameTextBox, dateTextBox);
+
+        HBox paneBottom = new HBox(20);
+        paneBottom.getChildren().addAll(crudLabels, nameDateBox);
+
 
         // Root additions
         root.setCenter(tabPane);
         root.setTop(menu);
-        root.setBottom(crudLabels);
+        root.setBottom(paneBottom);
         //Scene
         Scene scene = new Scene(root, 1024, 768);
         stage.setTitle("Logbook");
