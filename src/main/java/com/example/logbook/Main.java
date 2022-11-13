@@ -1,5 +1,6 @@
 package com.example.logbook;
 
+import com.example.logbook.database.Database;
 import com.example.logbook.tabs.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -18,6 +19,8 @@ import java.io.IOException;
 public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        Database connection =   Database.getInstance(); //open connection
+
         BorderPane root = new BorderPane();
         // creating menu bar
         MenuBar menu = new MenuBar();
@@ -25,6 +28,8 @@ public class Main extends Application {
         Menu creditsMenu = new Menu("Credits");
         MenuItem exit = new MenuItem("Exit");
         exit.setOnAction(e->{
+            // adding method to close connection
+            connection.close();
             System.exit(0);
         });
         fileMenu.getItems().add(exit);
