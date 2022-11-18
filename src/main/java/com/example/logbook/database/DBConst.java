@@ -4,7 +4,6 @@ public class DBConst {
 
     //many-to-many table workout_exercise
     public static final String TABLE_WORKOUT_EXERCISE = "workout_exercise";
-    public static final String WORKOUT_EXERCISE_COLUMN_ID = "id";
     public static final String WORKOUT_EXERCISE_COLUMN_WORKOUT_ID = "workout_id";
     public static final String WORKOUT_EXERCISE_COLUMN_EXERCISE_ID = "exercise_id";
 
@@ -79,13 +78,12 @@ public class DBConst {
 
     public static final String CREATE_TABLE_WORKOUT_EXERCISE =
             "CREATE TABLE " + TABLE_WORKOUT_EXERCISE + " (" +
-                    WORKOUT_EXERCISE_COLUMN_ID + " int NOT NULL AUTO_INCREMENT, " +
                     WORKOUT_EXERCISE_COLUMN_WORKOUT_ID + " int NOT NULL, " +
                     WORKOUT_EXERCISE_COLUMN_EXERCISE_ID + " int NOT NULL, " +
                     "FOREIGN KEY (" + WORKOUT_EXERCISE_COLUMN_WORKOUT_ID +")" +
                     " REFERENCES " + TABLE_WORKOUT +"(" +WORKOUT_COLUMN_ID +")," +
                     "FOREIGN KEY (" + WORKOUT_EXERCISE_COLUMN_EXERCISE_ID +")" +
                     " REFERENCES " + TABLE_EXERCISE +"(" +EXERCISE_COLUMN_ID +")," +
-                    "PRIMARY KEY(" + WORKOUT_EXERCISE_COLUMN_ID +")" +
+                    "PRIMARY KEY(" + WORKOUT_EXERCISE_COLUMN_WORKOUT_ID + " , " + WORKOUT_EXERCISE_COLUMN_EXERCISE_ID+")" +
                     ");";
 }
