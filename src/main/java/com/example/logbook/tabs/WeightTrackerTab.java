@@ -2,6 +2,8 @@ package com.example.logbook.tabs;
 
 import com.example.logbook.pojo.BodyWeight;
 import com.example.logbook.tables.BodyWeightTable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -43,7 +45,10 @@ public class WeightTrackerTab extends Tab {
 
         HBox hBox = new HBox();
         hBox.getChildren().addAll(weightField, submitButton);
-        root.setTop(hBox);
+        hBox.setAlignment(Pos.CENTER);
+        // setting hbox bottom padding
+        hBox.setPadding(new Insets(0, 0, 20, 0));
+        root.setBottom(hBox);
 
 
         root.setCenter(lineChart);
