@@ -17,7 +17,19 @@ import java.io.PrintWriter;
 public class Login extends Application {
 
 
-    public static void writeFile() throws FileNotFoundException {
+    public static void writeFile(TextField db_pass, TextField db_user) throws FileNotFoundException {
+        File file = new File("login.txt");
+        try{
+            PrintWriter output = new PrintWriter(file);
+            output.println(db_pass);
+            output.println(db_user);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        readFile();
+    }
+
+    public static void readFile() throws FileNotFoundException{
 
     }
 
@@ -25,8 +37,6 @@ public class Login extends Application {
     public void start(Stage primaryStage) throws Exception {
         BorderPane root = new BorderPane();
         Text login = new Text("Login");
-        Text name = new Text("Name");
-        TextField db_name = new TextField();
         Text pass = new Text("Password");
         TextField db_pass = new TextField();
         Text user = new Text("User");
@@ -35,7 +45,7 @@ public class Login extends Application {
 
         submit.setOnAction(e->{
             try {
-                writeFile();
+                writeFile(db_pass, db_user);
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
