@@ -15,18 +15,22 @@ import javafx.scene.layout.HBox;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class WeightTrackerTab extends Tab {
 
     private static WeightTrackerTab instance;
 
-    private LineChart lineChart;
+    private final LineChart<Number, Number> lineChart;
     private WeightTrackerTab() {
         this.setText("Weight Tracker");
         BorderPane root = new BorderPane();
-        lineChart = new LineChart(new NumberAxis(), new NumberAxis());
+        lineChart = new LineChart<Number, Number>(new NumberAxis(), new NumberAxis());
         lineChart.setTitle("Weight Tracker");
+        lineChart.setCreateSymbols(true);
+
+
 
         BodyWeightTable bodyWeightTable = new BodyWeightTable();
 
@@ -67,6 +71,9 @@ public class WeightTrackerTab extends Tab {
     public void generateChart(){
         BodyWeightTable bodyWeightTable = BodyWeightTable.getInstance();
         ArrayList<BodyWeight> bodyWeights = bodyWeightTable.getAllWeights();
+        Collections.sort(bodyWeights);
+
+        int i = 1;
 
         for(BodyWeight bodyWeight : bodyWeights){
             float weight = bodyWeight.getWeight();
@@ -81,13 +88,15 @@ public class WeightTrackerTab extends Tab {
             long diffDays = diff / (24 * 60 * 60 * 1000);
 
             XYChart.Series series = new XYChart.Series();
-            series.getData().add(new XYChart.Data(diffDays, weight));
+            series.getData().add(new XYChart.Data(i, weight));
+            System.out.println(diffDays + " " + weight);
             lineChart.getData().add(series);
 
             //naming x axis
             lineChart.getXAxis().setLabel("Days");
             //naming y axis
             lineChart.getYAxis().setLabel("Weight");
+            i++;
         }
 
     }

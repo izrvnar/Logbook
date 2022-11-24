@@ -2,7 +2,7 @@ package com.example.logbook.pojo;
 
 import java.sql.Timestamp;
 
-public class BodyWeight {
+public class BodyWeight implements Comparable<BodyWeight> {
     private int id;
     private float weight;
     private Timestamp date_weight;
@@ -37,4 +37,8 @@ public class BodyWeight {
         this.date_weight = date_weight;
     }
 
+    @Override
+    public int compareTo(BodyWeight o) {
+        return this.date_weight.compareTo(o.date_weight);
+    }
 }
