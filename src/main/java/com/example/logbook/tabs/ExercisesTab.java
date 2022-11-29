@@ -66,6 +66,8 @@ public class ExercisesTab extends Tab {
                     categoryField.getSelectionModel().getSelectedItem().getCategory_id()
             );
 
+            clearFields(nameField, setsField, repsField, weightField, categoryField);
+
             exerciseTable.createExercise(exercise);
             System.out.println("Item added");
             RoutineBreakdownTab.getInstance().generateChart();
@@ -76,10 +78,22 @@ public class ExercisesTab extends Tab {
 
     }// end of class
 
+    private static void clearFields(TextField nameField, TextField setsField, TextField repsField, TextField weightField, ComboBox<Categories> categoryField) {
+        //clearing fields
+        nameField.clear();
+        setsField.clear();
+        repsField.clear();
+        weightField.clear();
+        categoryField.getSelectionModel().clearSelection();
+    }
+
+
     public static ExercisesTab getInstance(){
         if(instance == null){
             instance = new ExercisesTab();
         }
         return instance;
     }
+
+
 }
