@@ -3,6 +3,7 @@ package com.example.logbook.tables;
 import com.example.logbook.daos.ExerciseDAO;
 import com.example.logbook.database.DBConst;
 import com.example.logbook.database.Database;
+import com.example.logbook.pojo.DisplayExercise;
 import com.example.logbook.pojo.Exercise;
 
 import java.sql.PreparedStatement;
@@ -109,6 +110,38 @@ public class ExerciseTable implements ExerciseDAO {
             throw new RuntimeException(e);
         }
         return count;
+    }
+
+    public ArrayList<DisplayExercise> getDisplayExericeItems(){
+        ArrayList<DisplayExercise> displayExerciseArrayList = new ArrayList<>();
+        String query = """
+                 SELECT
+                 exercise.id, 
+                 exercise.name AS exercise_name,
+                 exercise.sets,
+                 exercise.reps,
+                 exercise.weight,
+                 exercise.category_id,  
+                    FROM exercise
+                    JOIN exercise ON exercise.name = exercise.id
+                    """;
+
+        try {
+            Statement getExercises = db.getConnection().createStatement();
+            ResultSet data = getExercises.executeQuery(query);
+            while (data.next()) {
+                displayExerciseArrayList.add(new DisplayExercise(
+                        data.getInt("id"),
+                        data.getString("exercise_name"),
+                        data.getInt("sets"),
+                        data.getInt("reps"),
+                        data.getInt("weight"),
+                        data.getInt("category_id")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return displayExerciseArrayList;
     }
 
 

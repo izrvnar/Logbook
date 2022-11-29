@@ -1,19 +1,21 @@
 package com.example.logbook.tabs;
 
 import com.example.logbook.pojo.Categories;
+import com.example.logbook.pojo.DisplayExercise;
 import com.example.logbook.pojo.Exercise;
 import com.example.logbook.tables.CategoryTable;
 import com.example.logbook.tables.ExerciseTable;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 
 public class ExercisesTab extends Tab {
     private static ExercisesTab instance;
+    public TableView tableView;
     private ExercisesTab() {
         this.setText("Exercises");
         ExerciseTable exerciseTable = new ExerciseTable();
@@ -73,6 +75,36 @@ public class ExercisesTab extends Tab {
             RoutineBreakdownTab.getInstance().generateChart();
         });
         root.add(submit, 0, 5);
+
+        tableView = new TableView();
+        TableColumn<DisplayExercise, String> column1 =
+                new TableColumn<>("Name");
+        column1.setCellValueFactory(
+                e-> new SimpleStringProperty(e.getValue().getName()));
+
+        TableColumn<DisplayExercise, Integer> column2 =
+                new TableColumn<>("Sets");
+        column2.setCellValueFactory(
+                e-> new SimpleIntegerProperty(e.getValue().getSets()).asObject());
+
+        TableColumn<DisplayExercise, Integer> column3 =
+        new TableColumn<>("Reps");
+        column3.setCellValueFactory(
+                e-> new SimpleIntegerProperty(e.getValue().getReps()).asObject());
+
+        TableColumn<DisplayExercise, Float> column4 =
+        new TableColumn<>("Weight");
+        column4.setCellValueFactory(
+                e-> new SimpleFloatProperty( e.getValue().getWeight()).asObject());
+
+        TableColumn<DisplayExercise, Integer> column5 =
+        new TableColumn<>("Category");
+        column5.setCellValueFactory(
+                e-> new SimpleIntegerProperty(e.getValue().getCategory_id()).asObject());
+        tableView.getColumns().addAll(column1, column2, column3, column4, column5);
+        tableView.getItems().addAll(exerciseTable.getDisplayExericeItems());
+        // add tableview to right side of gridpane
+        root.add(tableView, 2, 0, 1, 6);
         this.setContent(root);
 
 
