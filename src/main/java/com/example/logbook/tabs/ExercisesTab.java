@@ -70,9 +70,11 @@ public class ExercisesTab extends Tab {
 
             clearFields(nameField, setsField, repsField, weightField, categoryField);
 
+
             exerciseTable.createExercise(exercise);
             System.out.println("Item added");
             RoutineBreakdownTab.getInstance().generateChart();
+            refreshTable();
         });
         root.add(submit, 0, 5);
 
@@ -97,10 +99,10 @@ public class ExercisesTab extends Tab {
         column4.setCellValueFactory(
                 e-> new SimpleFloatProperty( e.getValue().getWeight()).asObject());
 
-        TableColumn<DisplayExercise, Integer> column5 =
+        TableColumn<DisplayExercise, String> column5 =
         new TableColumn<>("Category");
         column5.setCellValueFactory(
-                e-> new SimpleIntegerProperty(e.getValue().getCategory_id()).asObject());
+                e-> new SimpleStringProperty(e.getValue().getCategory_name()));
         tableView.getColumns().addAll(column1, column2, column3, column4, column5);
         tableView.getItems().addAll(exerciseTable.getDisplayExericeItems());
         // add tableview to right side of gridpane
@@ -109,6 +111,12 @@ public class ExercisesTab extends Tab {
 
 
     }// end of class
+
+    public void refreshTable(){
+        ExerciseTable table = new ExerciseTable();
+        tableView.getItems().clear();
+        tableView.getItems().addAll(table.getDisplayExericeItems());
+    }
 
     private static void clearFields(TextField nameField, TextField setsField, TextField repsField, TextField weightField, ComboBox<Categories> categoryField) {
         //clearing fields
@@ -126,6 +134,7 @@ public class ExercisesTab extends Tab {
         }
         return instance;
     }
+
 
 
 }

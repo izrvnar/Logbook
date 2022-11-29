@@ -115,15 +115,13 @@ public class ExerciseTable implements ExerciseDAO {
     public ArrayList<DisplayExercise> getDisplayExericeItems(){
         ArrayList<DisplayExercise> displayExerciseArrayList = new ArrayList<>();
         String query = """
-                 SELECT
-                 exercise.id, 
-                 exercise.name AS exercise_name,
-                 exercise.sets,
-                 exercise.reps,
-                 exercise.weight,
-                 exercise.category_id,  
-                    FROM exercise
-                    JOIN exercise ON exercise.name = exercise.id
+                        SELECT exercise.exercise_id, 
+                        exercise.name, 
+                        exercise.sets, 
+                        exercise.reps, 
+                        exercise.weight, 
+                        categories.name AS cat_name
+                        FROM exercise JOIN categories ON categories.category_id = exercise.category_id;
                     """;
 
         try {
@@ -131,18 +129,19 @@ public class ExerciseTable implements ExerciseDAO {
             ResultSet data = getExercises.executeQuery(query);
             while (data.next()) {
                 displayExerciseArrayList.add(new DisplayExercise(
-                        data.getInt("id"),
-                        data.getString("exercise_name"),
+                        data.getInt("exercise_id"),
+                        data.getString("name"),
                         data.getInt("sets"),
                         data.getInt("reps"),
                         data.getInt("weight"),
-                        data.getInt("category_id")));
+                        data.getString("cat_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return displayExerciseArrayList;
     }
+
 
 
 }
