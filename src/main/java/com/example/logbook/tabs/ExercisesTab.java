@@ -52,7 +52,6 @@ public class ExercisesTab extends Tab {
                         categoryTable.getAllCategories()
                 )
         );
-        //TODO: get categories from database and set them to the combobox
         root.add(category, 0, 4);
         root.add(categoryField, 1, 4);
 
@@ -69,6 +68,7 @@ public class ExercisesTab extends Tab {
 
             exerciseTable.createExercise(exercise);
             System.out.println("Item added");
+            RoutineBreakdownTab.getInstance().generateChart();
         });
         root.add(submit, 0, 5);
         this.setContent(root);

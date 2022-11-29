@@ -5,6 +5,7 @@ import com.example.logbook.database.DBConst;
 import com.example.logbook.database.Database;
 import com.example.logbook.pojo.Categories;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -33,5 +34,19 @@ public class CategoryTable implements CategoryDAO {
     @Override
     public Categories getCategory(int id) {
         return null;
+    }
+
+    public int getCategoryCount(int category){
+        int count = -1;
+        try{
+            PreparedStatement getCount = db.getConnection().prepareStatement("SELECT * FROM " + DBConst.TABLE_CATEGORY + " WHERE "+ DBConst.CATEGORY_COLUMN_NAME + " = " + category +"", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet data = getCount.executeQuery();
+            data.last();
+            count =  data.getRow();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
     }
 }

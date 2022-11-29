@@ -1,6 +1,7 @@
 package com.example.logbook.pojo;
-
 public class Categories {
+
+
     private int category_id;
     private String name;
 

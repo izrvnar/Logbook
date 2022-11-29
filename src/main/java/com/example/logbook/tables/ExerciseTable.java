@@ -5,6 +5,7 @@ import com.example.logbook.database.DBConst;
 import com.example.logbook.database.Database;
 import com.example.logbook.pojo.Exercise;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -96,4 +97,19 @@ public class ExerciseTable implements ExerciseDAO {
     public void deleteExercise(int id) {
 
     }
+    public int getCategoryCount(int category){
+        int count = -1;
+        try{
+            PreparedStatement getCount = db.getConnection().prepareStatement("SELECT * FROM " + DBConst.TABLE_EXERCISE + " WHERE "+ DBConst.EXERCISE_COLUMN_CATEGORY_ID + " = " + category +"", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet data = getCount.executeQuery();
+            data.last();
+            count =  data.getRow();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return count;
+    }
+
+
 }
