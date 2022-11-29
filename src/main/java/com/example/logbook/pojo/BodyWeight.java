@@ -37,6 +37,7 @@ public class BodyWeight implements Comparable<BodyWeight> {
         this.date_weight = date_weight;
     }
 
+    // makes use able to sort the method by date
     @Override
     public int compareTo(BodyWeight o) {
         return this.date_weight.compareTo(o.date_weight);
