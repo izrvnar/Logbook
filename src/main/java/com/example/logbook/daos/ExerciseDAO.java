@@ -20,4 +20,5 @@ public interface ExerciseDAO {
     //delete exercise
     void deleteExercise(int id);
 
+
 }

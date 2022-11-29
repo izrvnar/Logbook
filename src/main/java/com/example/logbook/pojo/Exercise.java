@@ -17,6 +17,17 @@ public class Exercise {
         this.category_id = category_id;
     }
 
+    // constructor without ID
+
+
+    public Exercise(String name, int sets, int reps, float weight, int category_id) {
+        this.name = name;
+        this.sets = sets;
+        this.reps = reps;
+        this.weight = weight;
+        this.category_id = category_id;
+    }
+
     public int getExercise_id() {
         return exercise_id;
     }
