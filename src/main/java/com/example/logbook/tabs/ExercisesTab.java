@@ -1,7 +1,10 @@
 package com.example.logbook.tabs;
 
+import com.example.logbook.pojo.Categories;
 import com.example.logbook.pojo.Exercise;
+import com.example.logbook.tables.CategoryTable;
 import com.example.logbook.tables.ExerciseTable;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Tab;
@@ -14,6 +17,7 @@ public class ExercisesTab extends Tab {
     private ExercisesTab() {
         this.setText("Exercises");
         ExerciseTable exerciseTable = new ExerciseTable();
+        CategoryTable categoryTable = new CategoryTable();
         GridPane root = new GridPane();
 
         //getting name of exercise
@@ -42,7 +46,12 @@ public class ExercisesTab extends Tab {
 
         //getting category
         Text category = new Text("Category: ");
-        ComboBox categoryField = new ComboBox();
+        ComboBox<Categories> categoryField = new ComboBox();
+        categoryField.setItems(
+                FXCollections.observableArrayList(
+                        categoryTable.getAllCategories()
+                )
+        );
         //TODO: get categories from database and set them to the combobox
         root.add(category, 0, 4);
         root.add(categoryField, 1, 4);
@@ -55,7 +64,7 @@ public class ExercisesTab extends Tab {
                     Integer.parseInt(setsField.getText()),
                     Integer.parseInt(repsField.getText()),
                     Integer.parseInt(weightField.getText()),
-                    Integer.parseInt(categoryField.getValue().toString())
+                    categoryField.getSelectionModel().getSelectedItem().getCategory_id()
             );
 
             exerciseTable.createExercise(exercise);
