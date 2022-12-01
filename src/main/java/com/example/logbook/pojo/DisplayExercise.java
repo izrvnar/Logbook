@@ -8,13 +8,17 @@ public class DisplayExercise {
     private float weight;
     private String category_name;
 
-    public DisplayExercise(int exercise_id, String name, int sets, int reps, float weight, String category_name) {
+    // add id
+    private int category_id;
+
+    public DisplayExercise(int exercise_id, String name, int sets, int reps, float weight, String category_name, int category_id) {
         this.exercise_id = exercise_id;
         this.name = name;
         this.sets = sets;
         this.reps = reps;
         this.weight = weight;
         this.category_name = category_name;
+        this.category_id = category_id;
     }
 
     public int getExercise_id() {
@@ -63,5 +67,13 @@ public class DisplayExercise {
 
     public void setCategory_name(String category_name) {
         this.category_name = category_name;
+    }
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
     }
 }

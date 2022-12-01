@@ -8,6 +8,8 @@ import com.example.logbook.tables.ExerciseTable;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -59,12 +61,13 @@ public class ExercisesTab extends Tab {
 
         // Submit button
         Button submit = new Button("Submit");
+
         submit.setOnAction(e -> {
             Exercise exercise = new Exercise(
                     nameField.getText(),
                     Integer.parseInt(setsField.getText()),
                     Integer.parseInt(repsField.getText()),
-                    Integer.parseInt(weightField.getText()),
+                    Float.parseFloat(weightField.getText()),
                     categoryField.getSelectionModel().getSelectedItem().getCategory_id()
             );
 
@@ -87,6 +90,16 @@ public class ExercisesTab extends Tab {
 
 
         });
+
+        // clear button
+        Button clear = new Button("Clear");
+        clear.setOnAction(e -> {
+            clearFields(nameField, setsField, repsField, weightField, categoryField);
+            submit.setDisable(false);
+        });
+
+
+        root.add(clear, 2, 5);
         root.add(delete, 1, 5);
         root.add(submit, 0, 5);
 
@@ -118,12 +131,34 @@ public class ExercisesTab extends Tab {
         tableView.getColumns().addAll(column1, column2, column3, column4, column5);
         tableView.getItems().addAll(exerciseTable.getDisplayExericeItems());
         // add tableview to right side of gridpane
-        root.add(tableView, 2, 0, 1, 6);
+        root.add(tableView, 4, 0, 1, 6);
 
+        tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<DisplayExercise>() {
+            @Override
+            public void changed(ObservableValue observableValue, DisplayExercise oldValue, DisplayExercise newValue) {
+                if (newValue != null) {
+                    nameField.setText(newValue.getName());
+                    setsField.setText(String.valueOf(newValue.getSets()));
+                    repsField.setText(String.valueOf(newValue.getReps()));
+                    weightField.setText(String.valueOf(newValue.getWeight()));
+                    // set category field to the category of the selected item
+                    categoryField.getSelectionModel().select(newValue.getCategory_id() - 1);
+
+
+                }
+
+                //disable submit button
+                submit.setDisable(true);
+            }
+        });
         this.setContent(root);
 
 
+
+
     }// end of class
+
+
 
     public void refreshTable(){
         ExerciseTable table = new ExerciseTable();

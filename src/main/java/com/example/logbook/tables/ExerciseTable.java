@@ -90,7 +90,23 @@ public class ExerciseTable implements ExerciseDAO {
         }
 
     @Override
-    public void updateExercise(int id) {
+    public void updateExercise(Exercise exercise) {
+        String query = "UPDATE " + DBConst.TABLE_EXERCISE +
+                " SET " + DBConst.EXERCISE_COLUMN_NAME + " = '" + exercise.getName() + "', " +
+                DBConst.EXERCISE_COLUMN_SETS + " = '" + exercise.getSets() + "', " +
+                DBConst.EXERCISE_COLUMN_REPS + " = '" + exercise.getReps() + "', " +
+                DBConst.EXERCISE_COLUMN_WEIGHT + " = '" + exercise.getWeight() + "', " +
+                DBConst.EXERCISE_COLUMN_CATEGORY_ID + " = '" + exercise.getCategory_id() + "' " +
+                " WHERE " + DBConst.EXERCISE_COLUMN_ID + " = " + exercise.getExercise_id();
+
+        try {
+            Statement updateExercise = db.getConnection().createStatement();
+            updateExercise.executeUpdate(query);
+            System.out.println("Exercise Updated");
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -127,7 +143,8 @@ public class ExerciseTable implements ExerciseDAO {
                         exercise.name, 
                         exercise.sets, 
                         exercise.reps, 
-                        exercise.weight, 
+                        exercise.weight,
+                        exercise.category_id, 
                         categories.name AS cat_name
                         FROM exercise JOIN categories ON categories.category_id = exercise.category_id;
                     """;
@@ -142,7 +159,9 @@ public class ExerciseTable implements ExerciseDAO {
                         data.getInt("sets"),
                         data.getInt("reps"),
                         data.getInt("weight"),
-                        data.getString("cat_name")));
+                        data.getString("cat_name"),
+                        data.getInt("category_id")
+                        ));
             }
         } catch (SQLException e) {
             e.printStackTrace();
