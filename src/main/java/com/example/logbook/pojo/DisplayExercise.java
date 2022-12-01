@@ -1,30 +1,23 @@
 package com.example.logbook.pojo;
 
-public class Exercise {
+public class DisplayExercise {
     private int exercise_id;
     private String name;
     private int sets;
     private int reps;
     private float weight;
+    private String category_name;
+
+    // add id
     private int category_id;
 
-    public Exercise(int exercise_id, String name, int sets, int reps, float weight, int category_id) {
+    public DisplayExercise(int exercise_id, String name, int sets, int reps, float weight, String category_name, int category_id) {
         this.exercise_id = exercise_id;
         this.name = name;
         this.sets = sets;
         this.reps = reps;
         this.weight = weight;
-        this.category_id = category_id;
-    }
-
-    // constructor without ID
-
-
-    public Exercise(String name, int sets, int reps, float weight, int category_id) {
-        this.name = name;
-        this.sets = sets;
-        this.reps = reps;
-        this.weight = weight;
+        this.category_name = category_name;
         this.category_id = category_id;
     }
 
@@ -68,16 +61,19 @@ public class Exercise {
         this.weight = weight;
     }
 
+    public String getCategory_name() {
+        return category_name;
+    }
+
+    public void setCategory_name(String category_name) {
+        this.category_name = category_name;
+    }
+
     public int getCategory_id() {
         return category_id;
     }
 
     public void setCategory_id(int category_id) {
         this.category_id = category_id;
-    }
-
-    @Override
-    public String toString() {
-        return this.name;
     }
 }
