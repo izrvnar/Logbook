@@ -2,6 +2,8 @@ package com.example.logbook.tabs;
 
 import com.example.logbook.pojo.BodyWeight;
 import com.example.logbook.tables.BodyWeightTable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.chart.LineChart;
@@ -14,19 +16,21 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 
 public class WeightTrackerTab extends Tab {
 
     private static WeightTrackerTab instance;
 
-    private LineChart lineChart;
+    private final LineChart<Number, Number> lineChart;
     private WeightTrackerTab() {
         this.setText("Weight Tracker");
         BorderPane root = new BorderPane();
-        lineChart = new LineChart(new NumberAxis(), new NumberAxis());
+        lineChart = new LineChart<>(new NumberAxis(), new NumberAxis());
         lineChart.setTitle("Weight Tracker");
+        lineChart.setCreateSymbols(true);
+
+
 
         BodyWeightTable bodyWeightTable = new BodyWeightTable();
 
@@ -68,21 +72,30 @@ public class WeightTrackerTab extends Tab {
         BodyWeightTable bodyWeightTable = BodyWeightTable.getInstance();
         ArrayList<BodyWeight> bodyWeights = bodyWeightTable.getAllWeights();
 
-        for(BodyWeight bodyWeight : bodyWeights){
-            float weight = bodyWeight.getWeight();
-            Timestamp timestamp = bodyWeight.getDate_weight();
-            //get the current date
-            Date date = new Date();
-            date.getTime();
 
-            // minus the date from the timestamp
-            long diff = date.getTime() - timestamp.getTime();
-            //convert to days
-            long diffDays = diff / (24 * 60 * 60 * 1000);
+            List<XYChart.Data<Number, Number>> collection = new ArrayList<>();
 
-            XYChart.Series series = new XYChart.Series();
-            series.getData().add(new XYChart.Data(diffDays, weight));
-            lineChart.getData().add(series);
+           for(BodyWeight bodyWeight : bodyWeights){
+               float weight = bodyWeight.getWeight();
+               Timestamp timestamp = bodyWeight.getDate_weight();
+               //get the current date
+               Date date = new Date();
+
+               // minus the date from the timestamp
+               long diff = date.getTime() - timestamp.getTime();
+               //convert to days
+               long diffDays = diff / (24 * 60 * 60 * 1000);
+               collection.add(new XYChart.Data<>(diffDays, weight));
+           }
+
+        ObservableList<XYChart.Data<Number, Number>> list = FXCollections.observableArrayList(collection);
+        XYChart.Series<Number, Number> series = new XYChart.Series<>(list);
+        //sort the series by date
+
+
+
+        lineChart.getData().clear();
+        lineChart.getData().add(series);
 
             //naming x axis
             lineChart.getXAxis().setLabel("Days");
@@ -91,4 +104,4 @@ public class WeightTrackerTab extends Tab {
         }
 
     }
-}
+
