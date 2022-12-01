@@ -76,6 +76,18 @@ public class ExercisesTab extends Tab {
             RoutineBreakdownTab.getInstance().generateChart();
             refreshTable();
         });
+
+        Button delete = new Button("Delete");
+        delete.setOnAction(e -> {
+            DisplayExercise remove = (DisplayExercise) tableView.getSelectionModel().getSelectedItem();
+            exerciseTable.deleteExercise(remove.getExercise_id());
+            System.out.println("Item deleted");
+            RoutineBreakdownTab.getInstance().generateChart();
+            refreshTable();
+
+
+        });
+        root.add(delete, 1, 5);
         root.add(submit, 0, 5);
 
         tableView = new TableView();
@@ -107,6 +119,7 @@ public class ExercisesTab extends Tab {
         tableView.getItems().addAll(exerciseTable.getDisplayExericeItems());
         // add tableview to right side of gridpane
         root.add(tableView, 2, 0, 1, 6);
+
         this.setContent(root);
 
 

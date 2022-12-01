@@ -96,6 +96,14 @@ public class ExerciseTable implements ExerciseDAO {
 
     @Override
     public void deleteExercise(int id) {
+        String query = "DELETE FROM " + DBConst.TABLE_EXERCISE +
+                " WHERE " + DBConst.EXERCISE_COLUMN_ID + " = " + id;
+        try {
+            db.getConnection().createStatement().execute(query);
+            System.out.println("Exercise Deleted");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
     public int getCategoryCount(int category){
