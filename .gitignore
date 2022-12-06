@@ -200,4 +200,8 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+# DB Ignore
+/src/main/java/com/example/logbook/database/Const.java
+
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,macos,gradle
+
