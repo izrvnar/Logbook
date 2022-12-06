@@ -3,6 +3,8 @@ package com.example.logbook.tables;
 import com.example.logbook.daos.WorkoutExerciseDAO;
 import com.example.logbook.database.DBConst;
 import com.example.logbook.database.Database;
+import com.example.logbook.pojo.DisplayExercise;
+import com.example.logbook.pojo.DisplayWorkout;
 import com.example.logbook.pojo.Exercise;
 import com.example.logbook.pojo.Workout;
 
@@ -18,7 +20,7 @@ public class DisplayWorkoutExerciseTable implements WorkoutExerciseDAO {
     ArrayList<Exercise> exercises;
 
     @Override
-    public void addExerciseToWorkout(Workout workout, Exercise exercise) {
+    public void addExerciseToWorkout(DisplayWorkout workout, DisplayExercise exercise) {
         String query = "INSERT INTO " + DBConst.TABLE_WORKOUT_EXERCISE +
                 " (" + DBConst.WORKOUT_EXERCISE_COLUMN_WORKOUT_ID + ", " +
                 DBConst.WORKOUT_EXERCISE_COLUMN_EXERCISE_ID + ") " +

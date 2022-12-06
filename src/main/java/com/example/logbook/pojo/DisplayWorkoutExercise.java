@@ -1,12 +1,10 @@
 package com.example.logbook.pojo;
 
-import com.example.logbook.daos.WorkoutExerciseDAO;
-
 public class DisplayWorkoutExercise {
     private int workoutId;
     private int exerciseId;
 
-    public DisplayWorkoutExercise(int workoutId, int exerciseId){
+    public DisplayWorkoutExercise(int workoutId, int exerciseId) {
         this.workoutId = workoutId;
         this.exerciseId = exerciseId;
     }

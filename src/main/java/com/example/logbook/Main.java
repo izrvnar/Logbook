@@ -36,56 +36,9 @@ public class Main extends Application {
         menu.getMenus().addAll(fileMenu, creditsMenu);
         // Create tab pane
         TabPane tabPane = new TabPane();
-        tabPane.getTabs().addAll(WorkoutTab.getInstance(),ExercisesTab.getInstance(), ProgressTab.getInstance(), RoutineBreakdownTab.getInstance(), WeightTrackerTab.getInstance(), SettingsTab.getInstance());
+        tabPane.getTabs().addAll(WorkoutTab.getInstance(),ExercisesTab.getInstance(), RoutineBreakdownTab.getInstance(), WeightTrackerTab.getInstance());
         // setting the tabs to not be able to be closed
         tabPane.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-
-//        // Crud Labels
-//        VBox crudLabels = new VBox();
-//        crudLabels.setPadding(new Insets(10));
-//        crudLabels.setSpacing(25);
-//
-//        // create workout text
-//        Text createWorkoutText = new Text("Create Workout");
-//        createWorkoutText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//
-//
-//        // Delete workout Text
-//        Text deleteWorkoutText = new Text("Delete Workout");
-//        deleteWorkoutText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//
-//        //Update workout Text
-//        Text updateWorkoutText = new Text("Update Workout");
-//        updateWorkoutText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//
-//
-//        // Text added to vbox
-//        crudLabels.getChildren().addAll(createWorkoutText, deleteWorkoutText, updateWorkoutText);
-//
-//        //creating the name and date labels and text fields
-//        VBox nameDateBox = new VBox(25);
-//        HBox nameTextBox = new HBox();
-//        HBox dateTextBox = new HBox();
-//        Text nameText = new Text("Name");
-//        nameText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//
-//        TextField nameField = new TextField("");
-//        nameField.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//        nameTextBox.getChildren().addAll(nameText, nameField);
-//
-//        Text dateText = new Text("Date");
-//        dateText.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//
-//        TextField dateField = new TextField("");
-//        dateField.setFont(Font.font("Arial", FontWeight.BOLD, 20));
-//        dateTextBox.getChildren().addAll(dateText, dateField);
-//
-//        nameDateBox.getChildren().addAll(nameTextBox, dateTextBox);
-//
-//        HBox paneBottom = new HBox(20);
-//        paneBottom.getChildren().addAll(crudLabels, nameDateBox);
-
-
         // Root additions
         root.setCenter(tabPane);
         root.setTop(menu);

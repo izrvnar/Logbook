@@ -57,6 +57,13 @@ public class WorkoutTable implements WorkoutDAO {
 
     @Override
     public void deleteWorkout(int id) {
+        String query = "DELETE FROM " + DBConst.TABLE_WORKOUT + " WHERE " + DBConst.WORKOUT_COLUMN_ID + " = " + id;
+        try{
+            db.getConnection().createStatement().execute(query);
+            System.out.println("Workout deleted");
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
 
     }
 

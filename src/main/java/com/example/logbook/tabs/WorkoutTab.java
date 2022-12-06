@@ -6,19 +6,18 @@ import com.example.logbook.pojo.DisplayWorkoutExercise;
 import com.example.logbook.pojo.Workout;
 import com.example.logbook.tables.DisplayWorkoutExerciseTable;
 import com.example.logbook.tables.WorkoutTable;
-import javafx.beans.property.*;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-import java.sql.Time;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 
 public class WorkoutTab extends Tab {
     private static WorkoutTab instance;
@@ -26,9 +25,10 @@ public class WorkoutTab extends Tab {
     public TableView WorkoutTableView;
 
     private WorkoutTab() {
-       this.setText("Workouts");
+        ExercisesTab exercisesTab = new ExercisesTab();
+        this.setText("Workouts");
         GridPane root = new GridPane();
-
+        WorkoutTableView = new TableView<DisplayWorkout>();
         WorkoutTable workoutTable = new WorkoutTable();
         DisplayWorkoutExerciseTable displayWorkoutExerciseTable = new DisplayWorkoutExerciseTable();
         // text field for workout name
@@ -55,26 +55,44 @@ public class WorkoutTab extends Tab {
         addWorkout.setOnAction(e -> {
             Workout workout = new Workout(
                     workoutName.getText(), workoutTS
+
             );
 
             workoutTable.createWorkout(workout);
             System.out.println("Workout Has Been Added");
+            refreshWorkoutTable();
 
-            //get the workout date
         });
         root.add(addWorkout, 0, 2);
 
-        //create button to add selected exercise to workout
+        // button to delete workout
+        Button deleteWorkout = new Button("Delete Workout");
+        deleteWorkout.setOnAction(e -> {
+            DisplayWorkout remove = (DisplayWorkout) WorkoutTableView.getSelectionModel().getSelectedItem();
+            workoutTable.deleteWorkout(remove.getWorkout_id());
+            System.out.println("Workout Has Been Deleted");
+            refreshWorkoutTable();
+
+        });
+        //place button beside add workout button
+        root.add(deleteWorkout, 1, 2);
+
+        //create button to add selected exercise to work out
         Button addExercise = new Button("Add Exercise");
         addExercise.setOnAction(e -> {
-            //get the selected exercise
+                // get the selected workout
+                DisplayWorkout selectedWorkout = (DisplayWorkout) WorkoutTableView.getSelectionModel().getSelectedItem();
+                // get the selected exercise
+                DisplayExercise selectedExercise = (DisplayExercise) exercisesTab.tableView.getSelectionModel().getSelectedItem();
+                // create a new DisplayWorkoutExercise
+                DisplayWorkoutExercise displayWorkoutExercise = new DisplayWorkoutExercise(selectedWorkout.getWorkout_id(), selectedExercise.getExercise_id());
+//                displayWorkoutExerciseTable.addExerciseToWorkout(displayWorkoutExercise);
 
-            //get the selected workout
-            //add the exercise to the workout
+
         });
 
         root.add(addExercise, 0, 3);
-        WorkoutTableView = new TableView<DisplayWorkout>();
+
         TableColumn<DisplayWorkout, Integer> workoutColumn1 =
                 new TableColumn<>("ID");
         workoutColumn1.setCellValueFactory(
@@ -99,7 +117,6 @@ public class WorkoutTab extends Tab {
 
 
         // add exercise tab to the workout tab
-        ExercisesTab exercisesTab = new ExercisesTab();
         root.add(exercisesTab.tableView, 1, 3);
 
         DisplayTableView = new TableView();
@@ -130,17 +147,6 @@ public class WorkoutTab extends Tab {
         DisplayTableView.getColumns().addAll(column1, column2, column3, column4, column5);
         root.add(DisplayTableView, 4, 3);
 
-
-
-
-
-
-
-
-
-
-
-
         this.setContent(root);
     }
 
@@ -150,4 +156,13 @@ public class WorkoutTab extends Tab {
         }
         return instance;
     }
+
+    //refresh workout table
+    public void refreshWorkoutTable(){
+        WorkoutTable workoutTable = new WorkoutTable();
+        WorkoutTableView.getItems().clear();
+        WorkoutTableView.getItems().addAll(workoutTable.getDisplayWorkoutItems());
+    }
+
+
 }
