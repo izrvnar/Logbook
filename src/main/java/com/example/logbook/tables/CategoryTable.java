@@ -12,6 +12,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class CategoryTable implements CategoryDAO {
+
+    private static CategoryTable instance;
+
     Database db = Database.getInstance();
     @Override
     public ArrayList<Categories> getAllCategories() {
@@ -48,5 +51,12 @@ public class CategoryTable implements CategoryDAO {
             throw new RuntimeException(e);
         }
         return count;
+    }
+
+    public static CategoryTable getInstance(){
+        if(instance == null){
+            instance = new CategoryTable();
+        }
+        return instance;
     }
 }

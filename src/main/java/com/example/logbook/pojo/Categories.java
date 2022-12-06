@@ -1,11 +1,12 @@
 package com.example.logbook.pojo;
-public class Categories {
+public class Categories extends DatabaseItem{
 
 
     private int category_id;
     private String name;
 
     public Categories(int category_id, String name) {
+        super(category_id);
         this.category_id = category_id;
         this.name = name;
     }

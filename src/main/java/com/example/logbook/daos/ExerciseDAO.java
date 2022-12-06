@@ -15,7 +15,7 @@ public interface ExerciseDAO {
     Exercise getExercise(int id);
 
     // update exercise
-    void updateExercise(Exercise exercise);
+    void updateExercise(Exercise exercise, int id);
 
     //delete exercise
     void deleteExercise(int id);

@@ -16,6 +16,7 @@ public class ExerciseTable implements ExerciseDAO {
 
     // getting db instance
     Database db = Database.getInstance();
+    private static ExerciseTable instance;
 
     ArrayList<Exercise> exercises;
 
@@ -90,7 +91,7 @@ public class ExerciseTable implements ExerciseDAO {
         }
 
     @Override
-    public void updateExercise(Exercise exercise) {
+    public void updateExercise(Exercise exercise , int id) {
         String query = "UPDATE " + DBConst.TABLE_EXERCISE +
                 " SET " + DBConst.EXERCISE_COLUMN_NAME + " = '" + exercise.getName() + "', " +
                 DBConst.EXERCISE_COLUMN_SETS + " = '" + exercise.getSets() + "', " +
@@ -167,6 +168,13 @@ public class ExerciseTable implements ExerciseDAO {
             e.printStackTrace();
         }
         return displayExerciseArrayList;
+    }
+
+    public static ExerciseTable getInstance(){
+        if(instance == null){
+            instance = new ExerciseTable();
+        }
+        return instance;
     }
 
 

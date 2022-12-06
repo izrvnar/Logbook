@@ -17,8 +17,9 @@ import javafx.scene.text.Text;
 
 public class ExercisesTab extends Tab {
     private static ExercisesTab instance;
+
     public TableView tableView;
-    private ExercisesTab() {
+    public ExercisesTab() {
         this.setText("Exercises");
         ExerciseTable exerciseTable = new ExerciseTable();
         CategoryTable categoryTable = new CategoryTable();
@@ -99,6 +100,8 @@ public class ExercisesTab extends Tab {
         });
 
 
+
+
         root.add(clear, 2, 5);
         root.add(delete, 1, 5);
         root.add(submit, 0, 5);
@@ -137,14 +140,10 @@ public class ExercisesTab extends Tab {
             @Override
             public void changed(ObservableValue observableValue, DisplayExercise oldValue, DisplayExercise newValue) {
                 if (newValue != null) {
-                    nameField.setText(newValue.getName());
-                    setsField.setText(String.valueOf(newValue.getSets()));
-                    repsField.setText(String.valueOf(newValue.getReps()));
-                    weightField.setText(String.valueOf(newValue.getWeight()));
-                    // set category field to the category of the selected item
-                    categoryField.getSelectionModel().select(newValue.getCategory_id() - 1);
-
-
+                    Exercise exercise = ExerciseTable.getInstance().getExercise(newValue.getExercise_id());
+                    UpdatePane pane = new UpdatePane(exercise);
+                    // add pane to right side of the screen
+                    root.add(pane, 15, 0, 1, 6);
                 }
 
                 //disable submit button
@@ -152,9 +151,6 @@ public class ExercisesTab extends Tab {
             }
         });
         this.setContent(root);
-
-
-
 
     }// end of class
 
