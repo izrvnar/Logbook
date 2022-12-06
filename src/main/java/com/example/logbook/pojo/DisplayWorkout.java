@@ -1,24 +1,20 @@
 package com.example.logbook.pojo;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
-public class Workout {
+public class DisplayWorkout {
     private int workout_id;
     private String name;
-    private Date workout_date;
+    private Timestamp workout_date;
 
-    public Workout(int workout_id, String name, Date workout_date) {
+    public DisplayWorkout(int workout_id, String name, Timestamp workout_date) {
         this.workout_id = workout_id;
         this.name = name;
         this.workout_date = workout_date;
     }
 
-    // constructor without ID
-
-
-    public Workout(String name, Date workout_date) {
+    public DisplayWorkout(String name) {
         this.name = name;
-        this.workout_date = workout_date;
     }
 
     public int getWorkout_id() {
@@ -37,16 +33,13 @@ public class Workout {
         this.name = name;
     }
 
-    public Date getWorkout_date() {
+    public Timestamp getWorkout_date() {
         return workout_date;
     }
 
-    public void setWorkout_date(Date workout_date) {
+    public void setWorkout_date(Timestamp workout_date) {
         this.workout_date = workout_date;
     }
 
-    @Override
-    public String toString() {
-        return this.name;
-    }
+
 }
