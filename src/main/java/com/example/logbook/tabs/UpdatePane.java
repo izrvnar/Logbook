@@ -77,7 +77,7 @@ public class UpdatePane extends GridPane {
 
         });
 
-        this.add(updateButton,0,5);
+        this.add(updateButton,1,6);
 
     }
 

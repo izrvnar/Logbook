@@ -6,10 +6,7 @@ import com.example.logbook.pojo.DisplayWorkoutExercise;
 import com.example.logbook.pojo.Workout;
 import com.example.logbook.tables.DisplayWorkoutExerciseTable;
 import com.example.logbook.tables.WorkoutTable;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleLongProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
@@ -77,26 +74,26 @@ public class WorkoutTab extends Tab {
         });
 
         root.add(addExercise, 0, 3);
-//        WorkoutTableView = new TableView();
-//        TableColumn<DisplayWorkout, Integer> workoutColumn1 =
-//                new TableColumn<>("ID");
-//        workoutColumn1.setCellValueFactory(
-//                e-> new SimpleIntegerProperty(e.getValue().getWorkout_id()).asObject());
-////
-////        TableColumn<DisplayWorkout, String> workoutColumn2 =
-////                new TableColumn<>("Name");
-////        workoutColumn2.setCellValueFactory(
-////                e-> new SimpleStringProperty(e.getValue().getName()));
-//////
-////        TableColumn<DisplayWorkout, Long> workoutColumn3 =
-////                new TableColumn<>("Date");
-////        workoutColumn3.setCellValueFactory(
-////                e-> new SimpleLongProperty(e.getValue().getWorkout_date().getTime()).asObject());
-//
-//        WorkoutTableView.getColumns().addAll(workoutColumn1);
-//        WorkoutTableView.getItems().addAll(workoutTable.getAllWorkouts());
+        WorkoutTableView = new TableView<DisplayWorkout>();
+        TableColumn<DisplayWorkout, Integer> workoutColumn1 =
+                new TableColumn<>("ID");
+        workoutColumn1.setCellValueFactory(
+                e-> new SimpleIntegerProperty(e.getValue().getWorkout_id()).asObject());
 
-//        root.add(WorkoutTableView, 0,3);
+        TableColumn<DisplayWorkout, String> workoutColumn2 =
+                new TableColumn<>("Name");
+        workoutColumn2.setCellValueFactory(
+                e-> new SimpleStringProperty(e.getValue().getName()));
+//
+        TableColumn<DisplayWorkout, Date> workoutColumn3 =
+                new TableColumn<>("Date");
+        workoutColumn3.setCellValueFactory(
+                e-> new SimpleObjectProperty<>(e.getValue().getWorkout_date()));
+
+        WorkoutTableView.getColumns().addAll(workoutColumn1, workoutColumn2, workoutColumn3);
+        WorkoutTableView.getItems().addAll(workoutTable.getDisplayWorkoutItems());
+
+        root.add(WorkoutTableView, 0,3);
 
 
 

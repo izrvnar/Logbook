@@ -3,6 +3,8 @@ package com.example.logbook.tables;
 import com.example.logbook.daos.WorkoutDAO;
 import com.example.logbook.database.DBConst;
 import com.example.logbook.database.Database;
+import com.example.logbook.pojo.DisplayExercise;
+import com.example.logbook.pojo.DisplayWorkout;
 import com.example.logbook.pojo.Workout;
 
 import java.sql.ResultSet;
@@ -62,4 +64,40 @@ public class WorkoutTable implements WorkoutDAO {
     public void updateWorkout(int id) {
 
     }
+
+    public ArrayList<DisplayWorkout> getDisplayWorkoutItems(){
+        ArrayList<DisplayWorkout> displayWorkoutsArrayList = new ArrayList<>();
+        String query = """  
+                        SELECT workout.workout_id,
+                        workout.name,
+                        workout.workout_date
+                        FROM workout
+                        """;
+
+//                        SELECT exercise.exercise_id,
+//                        exercise.name,
+//                        exercise.sets,
+//                        exercise.reps,
+//                        exercise.weight,
+//                        exercise.category_id,
+//                        categories.name AS cat_name
+//                        FROM exercise JOIN categories ON categories.category_id = exercise.category_id;
+        try{
+            Statement getWorkouts = db.getConnection().createStatement();
+            ResultSet data = getWorkouts.executeQuery(query);
+            while(data.next()){
+                displayWorkoutsArrayList.add(new DisplayWorkout(
+                        data.getInt("workout_id"),
+                        data.getString("name"),
+                        data.getDate("workout_date")
+                ));
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return displayWorkoutsArrayList;
+    }
+
+
+
 }
